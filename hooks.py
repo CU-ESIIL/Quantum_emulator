@@ -1,5 +1,5 @@
 """
-MkDocs hooks for LLM_lesson_exemplar.
+MkDocs hooks for Quantum_emulator.
 
 on_pre_build: Copies harmonized_visualization.png from each project's output/
               directory into docs/assets/ so MkDocs can serve them.

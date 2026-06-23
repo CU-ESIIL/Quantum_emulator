@@ -1,34 +1,70 @@
-# Geospatial Harmonization with LLMs
+# Quantum Emulator for Environmental Data Science
 
-This repository demonstrates how large language models (LLMs) can be used to harmonize geospatial datasets from user-provided URLs.
+This repository is a hands-on training sandbox for environmental data scientists
+who want to practice quantum-ready workflows without needing a quantum computer
+or a physics background.
 
-Instead of writing custom scripts for each dataset, the workflow is:
+The project starts from familiar environmental data science work: harmonizing
+geospatial layers, building a biological decision table, and choosing ecological
+monitoring sites. It then shows how that decision can be translated into a
+binary optimization problem, solved with a local quantum-inspired emulator,
+compared with a classical baseline, and mapped back onto geospatial data.
 
-1. A user provides dataset URLs
-2. The LLM inspects the datasets
-3. The LLM decides how to harmonize them (CRS, extent, resolution)
-4. Shared Python functions perform the harmonization
-5. Outputs and maps are generated
+The core idea:
 
----
+> AI agents can help harmonize and prepare environmental data. Quantum-inspired
+> optimization can then help explore decision spaces.
 
-## What This Repository Does
+## What This Repo Teaches
 
-The harmonization workflow supports:
+* How harmonized environmental layers can become a site-level decision table.
+* What a binary decision variable means in a monitoring-site selection problem.
+* How to express biological value, environmental coverage, redundancy, cost,
+  and a target number of sites as a QUBO-style model.
+* How to run a local quantum-inspired emulator on classical hardware.
+* How to compare an emulator result with a simple greedy classical baseline.
+* How to inspect selected sites as CSV, GeoJSON, and a map.
 
-* downloading datasets from URLs (direct download, ZIP extraction, OPeNDAP streaming)
-* extracting archives (e.g., ZIP files)
-* identifying raster and vector inputs
-* reprojecting to a common CRS
-* clipping to a shared extent
-* aligning raster resolution
-* optionally rasterizing vector data
-* saving harmonized outputs
-* generating a static PNG visualization and an interactive HTML map
+## What This Repo Does Not Claim
 
----
+This repository does not demonstrate quantum advantage, speedup, or superior
+performance over classical methods. The default workflow runs locally on
+classical hardware. The goal is practice: learning how environmental decision
+problems can be prepared in forms that are compatible with quantum-inspired,
+quantum-emulated, and eventually quantum or hybrid optimization tools.
 
-## Quick Start
+No D-Wave cloud account is required for the default demo.
+
+## Workflow
+
+```text
+harmonized environmental layers
+        |
+        v
+biological decision table
+        |
+        v
+site-selection objective
+        |
+        v
+QUBO / Ising-style binary optimization model
+        |
+        v
+local quantum-inspired emulator
+        |
+        v
+classical greedy baseline comparison
+        |
+        v
+selected sites mapped back to geography
+```
+
+Example problem:
+
+> Choose priority ecological monitoring sites that maximize biological value
+> and environmental coverage while minimizing redundancy and cost.
+
+## Quickstart
 
 Install dependencies:
 
@@ -36,140 +72,66 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the example:
+Run the ecological monitoring demo:
 
 ```bash
-python examples/colorado_fire_risk/colorado_harmonization.py
+python3 workflows/ecological_monitoring_demo/01_make_synthetic_site_table.py
+python3 workflows/ecological_monitoring_demo/02_build_qubo.py
+python3 workflows/ecological_monitoring_demo/03_run_quantum_emulator.py
+python3 workflows/ecological_monitoring_demo/04_compare_baselines.py
+python3 workflows/ecological_monitoring_demo/05_map_results.py
 ```
 
----
+Key outputs are written to `workflows/ecological_monitoring_demo/output/`:
 
-## Example: Colorado Fire Risk
+* `candidate_sites.csv`
+* `selected_sites_quantum_emulator.csv`
+* `selected_sites_quantum_emulator.geojson`
+* `selected_sites_greedy_baseline.csv`
+* `site_selection_comparison.csv`
+* `harmonized_visualization.png`
 
-This repository includes a worked example that harmonizes:
+The demo generates a synthetic but biologically plausible candidate-site table
+if no external data are present. In a real ESIIL working group project, this
+table could be derived from harmonized rasters, vectors, field observations, or
+geospatial data cubes.
 
-* **FBFM40 Fire Behavior Fuel Models** (raster) — Landfire 2024 Scott and Burgan 40-class model
-* **MACAv2 Winter Precipitation** (raster) — CCSM4 RCP8.5 Dec–Mar mean 2006–2099, streamed via OPeNDAP
-* **MTBS Burned Area Boundaries** (vector) — USGS fire perimeters, kept as vector
-* **Microsoft Building Footprints** (vector, rasterized) — Colorado buildings at ~270 m
+## Existing Geospatial Examples
 
-All datasets are harmonized to:
+The original geospatial harmonization examples are preserved. They remain useful
+for learning how an AI-assisted repository can turn environmental datasets into
+aligned analysis-ready layers:
 
-* CRS: EPSG:4326
-* Extent: Colorado bounding box (`-109.05, 36.99, -102.04, 41.01`)
-* Resolution: ~270 m (0.00243°)
+```bash
+python3 examples/colorado_fire_risk/colorado_harmonization.py
+```
 
-Goal:
-
-> Visualize fire behavior fuel models, projected winter precipitation, past burned areas, and human infrastructure together to understand fire risk patterns across Colorado.
-
-See `examples/colorado_fire_risk/colorado_harmonization.py`.
-
----
-
-## How to Use This Repository with an LLM
-
-You can prompt an LLM with something like:
-
-> "Download these datasets, harmonize them to EPSG:4326 over Colorado, and generate a map."
-
-The LLM should:
-
-* download and inspect the datasets
-* determine raster vs vector inputs
-* ask about resolution mismatches if needed
-* reproject and clip datasets
-* optionally rasterize vector data
-* generate harmonized outputs and a visualization
-
-The expected behavior is defined in `AGENTS.md`.
-
----
+Those examples are now framed as the upstream data-preparation stage for the
+quantum-ready optimization workflow.
 
 ## Repository Structure
 
 ```text
 src/
-  geospatial_harmonizer.py        # core harmonization library — import from here
+  geospatial_harmonizer.py        # existing geospatial harmonization tools
+  quantum_optimizer/              # QUBO, emulator, scoring, and plotting helpers
 
 examples/
-  colorado_fire_risk/             # reference example — learn from here, don't modify
-    colorado_harmonization.py
-    output/                       # generated outputs (data gitignored, viz tracked)
+  colorado_fire_risk/             # preserved harmonization reference example
 
-workflows/                        # your analyses go here
-  my_project/                     # one folder per project
-    my_script.py
-    output/                       # generated outputs co-located with the script
+workflows/
+  ecological_monitoring_demo/     # main quantum-ready training workflow
+  utah_fire_risk/                 # preserved harmonization workflow
 
-docs/                             # website source (MkDocs)
-AGENTS.md                         # LLM behavior and workflow rules
+docs/                             # MkDocs website source
+tests/                            # lightweight tests for harmonization and optimizer code
+AGENTS.md                         # agent workflow instructions
 requirements.txt
 ```
 
-**If you are a scientist using this as a template:**
-- Read `examples/colorado_fire_risk/colorado_harmonization.py` to understand the pattern
-- Create a new folder in `workflows/` for each analysis
-- Outputs land in your project's own `output/` folder, next to the script
-
-**If you are an LLM agent:**
-- New analyses go in `workflows/<project_name>/`, not in `examples/`
-- Set `output_dir=Path(__file__).parent / "output"` — never hardcode paths
-- Core library is `src/geospatial_harmonizer.py` — read it before writing harmonization code
-- Full rules are in `AGENTS.md`
-
----
-
-## Python API
-
-Run a harmonization workflow directly:
-
-```python
-from pathlib import Path
-from src.geospatial_harmonizer import DatasetSpec, ExampleWorkflow, run_harmonization_example
-
-workflow = ExampleWorkflow(
-    name="my_workflow",
-    datasets=[
-        DatasetSpec(
-            name="my_raster",
-            url="https://example.com/data.tif",
-            data_type="raster",
-        ),
-        DatasetSpec(
-            name="my_vector",
-            url="https://example.com/data.zip",
-            data_type="vector",
-            rasterize=True,
-        ),
-    ],
-    target_crs="EPSG:4326",
-    target_extent=(-109.05, 36.99, -102.04, 41.01),
-    target_resolution=0.00243,
-    output_dir=Path("./output/my_run"),
-    create_visualization=True,
-    verbose=True,
-)
-
-output_files, interactive_map = run_harmonization_example(workflow)
-```
-
----
-
-## Design Philosophy
-
-* The LLM handles decision-making and orchestration
-* The Python code handles geospatial processing
-* Examples demonstrate real workflows
-* The system is reusable across datasets
-
----
-
 ## Documentation Website
 
-This repository includes a documentation site built with MkDocs.
-
-To preview locally:
+Preview the documentation locally:
 
 ```bash
 pip install mkdocs mkdocs-material
@@ -178,16 +140,9 @@ mkdocs serve
 
 Then open `http://127.0.0.1:8000`.
 
----
+## Notes for Learners
 
-## Notes
-
-This repository is designed as a teaching and demonstration tool.
-
-It shows how LLMs can:
-
-* reason about geospatial data
-* make harmonization decisions
-* orchestrate reusable processing code
-
-rather than requiring custom scripts for each dataset.
+You do not need to start with quantum hardware. Start with emulation on
+classical hardware, inspect the decision table, understand the binary variables,
+and compare the emulator output with a baseline you can explain. That is the
+useful first step toward quantum-ready environmental data science.

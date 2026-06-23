@@ -1,97 +1,87 @@
-![Provide Your Own Data Sources banner with database and data-flow icons.](assets/images/heroes/provide-data-sources-hero.png){ .page-hero }
-
 # Bring Your Own Data
 
-This tutorial shows one specific workflow for getting a direct download URL from a web data source and giving that URL to the LLM workflow. The example here uses PAD-US data for Alabama from USGS ScienceBase.
+The default demo uses synthetic ecological monitoring sites so the emulator
+workflow is easy to run. For a real ESIIL working group, the next step is to
+replace that synthetic table with variables from your own study system.
 
-This page is not a general catalog-search guide. It is a click-by-click record of the workflow shown in the tutorial directions. Use it when you already know which dataset you want and you need the direct downloadable file URL that the LLM or workflow can use.
-
-If you want more context on how these downloaded sources become comparable inside the workflow, see [What Is a Data Harmonizer?](data-harmonizer.md).
-
-## Example: Getting the download URL
-
-Let's say you want to download PAD data for Alabama from USGS.
-
-First, check if your data is already in the course data catalog or example dataset list. If the dataset you need is already listed there, use the existing catalog entry. If it is not listed, then proceed with the steps below.
-
-Example download page shown in the screenshots:
+The goal is not only to download data. The goal is to produce a decision table
+that can feed the QUBO workflow.
 
 ```text
-https://www.sciencebase.gov/catalog/item/6759abcfd34edfeb8710a004
+your data sources -> harmonized features -> candidate-site table -> emulator
 ```
 
-![Screenshot showing the USGS ScienceBase PAD-US 4.1 State Downloads page with the attached files area visible.](assets/images/data-sources/data-source-01-sciencebase-page.png)
+## What The Emulator Needs
 
-*Screenshot: USGS ScienceBase page for PAD-US 4.1 State Downloads.*
+At minimum, prepare a table where each row is a candidate site, planning unit, or
+management option.
 
-## Step 1: Click on the data you are downloading
+Useful columns include:
 
-On the ScienceBase page, scroll to the Attached Files section.
+* `site_id`
+* `lat`
+* `lon`
+* biological value, such as `species_richness`
+* climate or resilience value, such as `climate_refugia_score`
+* connectivity or complementarity value, such as `habitat_connectivity`
+* `cost`
+* `region`
+* optional environmental features, such as temperature, precipitation, or elevation
 
-Click on the data file you are downloading. In this example, the target file is the Alabama PAD-US file:
+The optimizer can work with synthetic data, CSV files, or tables generated from
+harmonized rasters and vectors.
+
+## When You Need Direct Download URLs
+
+If your data are geospatial files that need harmonization first, give the agent
+direct download URLs rather than landing pages. A direct URL points to the file
+itself, such as a `.zip`, `.tif`, `.geojson`, or NetCDF endpoint.
+
+Portal pages are useful for humans, but they often return HTML instead of data.
+The harmonizer needs the downloadable file.
+
+## Example Request
+
+Use a request like this when you already know the data sources:
 
 ```text
-PADUS4_1_State_AL_GDB_KMZ.zip
+Use these direct data URLs to prepare candidate ecological monitoring sites for
+the quantum-emulator workflow. Harmonize the layers over my study area, extract
+site-level variables, build a decision table, then run the local emulator and
+compare it with the greedy baseline.
 ```
 
-![Screenshot showing the attached files table with the PADUS4_1_State_AL_GDB_KMZ.zip link.](assets/images/data-sources/data-source-02-attached-files.png)
+Include:
 
-*Screenshot: attached files section with the Alabama PAD-US download file.*
+* study area or boundary
+* direct data URLs
+* which variables should become biological rewards
+* which variables should become environmental coverage features
+* which variables represent cost
+* how many sites or planning units should be selected
 
-## Step 2: Complete Captcha
+## Getting A Direct URL From A Portal
 
-After clicking the file, ScienceBase may ask you to complete a captcha.
+Some portals, such as USGS ScienceBase, require a few clicks before the direct
+file URL appears.
 
-Complete the captcha and submit it.
+General pattern:
 
-![Screenshot showing the ScienceBase captcha page before downloading the file.](assets/images/data-sources/data-source-03-captcha.png)
+1. Open the dataset landing page.
+2. Find the attached file or download section.
+3. Start the file download.
+4. Open your browser download history.
+5. Copy the actual file URL from the downloaded item.
+6. Give that direct URL to the workflow.
 
-*Screenshot: captcha step before downloading the file.*
+Some direct URLs expire. If a workflow later fails with a download error, return
+to the portal and copy a fresh URL.
 
-## Step 3: Click "Download File"
+## Use The Harmonizer As Needed
 
-After the captcha is complete, ScienceBase will show a file transfer page.
+If your candidate table already exists, you can skip geospatial harmonization
+and start with the QUBO workflow.
 
-Click **Download File**.
-
-![Screenshot showing the File Transfer Process page with the Download File button.](assets/images/data-sources/data-source-04-download-file.png)
-
-*Screenshot: file transfer page with the Download File button.*
-
-## Step 4: Open Full Download History
-
-The file will start downloading. You can cancel it later if you only need the URL.
-
-In the browser download popup, click **Full Download History**.
-
-![Screenshot showing the browser download popup with Full Download History.](assets/images/data-sources/data-source-05-download-history-popover.png)
-
-*Screenshot: browser download popup with Full Download History.*
-
-## Step 5: Copy the download URL
-
-In the browser download history page, find the downloaded file.
-
-Click the link button to copy the download URL.
-
-![Screenshot showing the browser download history page with the copy download link button.](assets/images/data-sources/data-source-06-copy-download-link.png)
-
-*Screenshot: copy download link button in browser download history.*
-
-## Step 6: Give that download URL to the LLM
-
-That copied URL is the download URL you provide to the LLM.
-
-For this example, the copied URL looks like this:
-
-```text
-https://prod-is-usgs-sb-prod-content.s3.amazonaws.com/6759abcfd34edfeb8710a004/PADUS4_1_State_AL_GDB_KMZ.zip?AWSAccessKeyId=AKIAI7K4IX6D4QLARINA&Expires=1777587284&Signature=Ba6VQaZzimHp3XPMfLyN0CvdLqo%3D
-```
-
-Use the URL from your own browser download history, not this example URL, unless you are intentionally reproducing the exact Alabama PAD-US example.
-
-!!! note "Use the copied direct file URL"
-    The LLM workflow needs the direct file URL, not just the landing page URL. The ScienceBase landing page is useful for humans, but the direct file URL is what allows the workflow to retrieve the file.
-
-!!! warning "These links can expire"
-    Some direct download URLs include temporary access parameters such as expiration times or signatures. If the workflow fails later, repeat the download-history step and copy a fresh URL.
+If your variables live in separate spatial layers, use the harmonizer first. The
+harmonizer is still documented because it is how many environmental projects
+move from raw data into the structured table that the emulator can understand.

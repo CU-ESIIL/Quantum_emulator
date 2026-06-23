@@ -1,0 +1,3 @@
+solution,n_sites,mean_biological_value,total_cost,mean_cost_norm,mean_environmental_distance,regions_represented
+quantum_inspired_emulator,12,0.5858442686819239,65912.99,0.4999380406308151,1.0440401657987488,3
+greedy_classical_baseline,12,0.7305338510238831,62529.03,0.4316422663808867,0.6278725062324416,3

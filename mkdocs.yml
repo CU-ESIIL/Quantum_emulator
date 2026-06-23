@@ -1,30 +1,42 @@
-site_name: "Geospatial Harmonization with LLMs"
-site_description: "A template for using LLMs to harmonize environmental science datasets"
-site_url: "https://cu-esiil.github.io/LLM_lesson_exemplar/"
+site_name: "Quantum Emulator for Environmental Data Science"
+site_description: "A training sandbox for quantum-ready environmental data science workflows"
+site_url: "https://cu-esiil.github.io/Quantum_emulator/"
 
-repo_name: "link to repository"
-repo_url: "https://github.com/CU-ESIIL/LLM_lesson_exemplar"
+repo_name: "CU-ESIIL/Quantum_emulator"
+repo_url: "https://github.com/CU-ESIIL/Quantum_emulator"
 edit_uri: "edit/main/docs/"
+
+exclude_docs: |
+  ai-infrastructure/**
+  available-models.md
+  cyverse.md
+  developer-docs.md
+  examples.md
+  examples/**
+  modify.md
+  slides.md
 
 hooks:
   - hooks.py
 
 nav:
   - Home: index.md
-  - Run Locally: start-here.md
-  - Run on CyVerse: cyverse.md
-  - LLM Guide:
-      - Lesson Slides: slides.md
-      - What Is a Data Harmonizer?: data-harmonizer.md
-      - Available Models: available-models.md
-      - Agents and Systems: agents-and-systems.md
-      - LLM Hosting and Data Centers: ai-infrastructure/llm-hosting-data-centers.md
-      - Developer Documentation: developer-docs.md
-  - Bring Your Own Data: provide-your-own-data-sources.md
+  - Why Quantum for EDS?: why-quantum-for-eds.md
+  - The Example Problem: example-problem.md
+  - Build a Decision Table: build-decision-table.md
+  - QUBO / Ising Explainer: qubo-explainer.md
+  - Run the Quantum Emulator: run-the-demo.md
+  - Interpret the Results: interpret-results.md
+  - Where This Could Go Next: next-steps.md
+  - Data Preparation Reference:
+      - Local Setup: start-here.md
+      - Bring Your Own Data: provide-your-own-data-sources.md
+      - Harmonizer for Emulator Inputs: data-harmonizer.md
+      - Agents and Emulator Workflows: agents-and-systems.md
 
 theme:
   name: material
-  logo: assets/llm_logo.png
+  logo: assets/quantum-infrastructure-logo.png
   favicon: assets/esiil_content/favicon.png
   custom_dir: docs/overrides
   palette:
@@ -64,8 +76,6 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - assets/javascripts/lesson-slides.js
-  - assets/javascripts/cyverse-toc.js
   - assets/javascripts/site-links.js
 
 plugins:

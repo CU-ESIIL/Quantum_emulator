@@ -1,55 +1,55 @@
-![Run Locally banner with a speed gauge and checklist.](assets/images/heroes/quick-start-hero.png){ .page-hero }
+# Local Setup
 
-# Run Locally
+This page helps you run the quantum-emulator training workflow on your own
+computer. The default path uses synthetic ecological monitoring data, builds a
+QUBO-style site-selection model, runs a local quantum-inspired emulator, compares
+the result with a greedy baseline, and writes outputs you can inspect.
 
-This page is for learners who want to run the lesson on their own computer instead of launching the CyVerse cloud environment. Use this path if you already have a working terminal, Python, Git, and access to an LLM API key or OpenAI-compatible model endpoint.
+The geospatial harmonizer is still part of the repository, but it now serves as
+the data-preparation layer: use it when you need harmonized environmental layers
+before building a decision table.
 
-If you want the fully guided workshop environment, use [Run on CyVerse](cyverse.md) instead.
+## What You Will Run
 
-## What you will run
+The main local workflow is:
 
-This lesson uses a Colorado fire risk example to show how a large language model can help organize environmental data sources, identify harmonization steps, and produce a reproducible analysis workflow. The goal is not to hide the analysis behind AI. The goal is to make the assumptions, transformations, and outputs easier to inspect.
+```text
+candidate sites -> QUBO -> local emulator -> baseline comparison -> map
+```
 
-If you want more context on why harmonization is necessary before analysis, see [What Is a Data Harmonizer?](data-harmonizer.md).
+You will:
 
-The local run will:
-
-1. Clone the lesson repository.
+1. Clone `CU-ESIIL/Quantum_emulator`.
 2. Create a local Python environment.
-3. Install the required packages.
-4. Add model credentials safely.
-5. Run the reference Colorado example.
-6. Inspect the generated outputs.
+3. Install dependencies.
+4. Run the ecological monitoring demo.
+5. Inspect selected sites, comparison metrics, and the map output.
+6. Optionally run the preserved geospatial harmonizer examples.
 
-## Before you begin
+No quantum hardware or D-Wave cloud account is required.
+
+## Before You Begin
 
 Make sure you have:
 
-- Git installed.
-- Python 3 available from your terminal.
-- Permission to install Python packages.
-- An LLM API key or OpenAI-compatible endpoint if you plan to run model-assisted parts of the workflow.
-- Enough disk space for downloaded geospatial data and generated outputs.
+* Git installed.
+* Python 3 available from your terminal.
+* Permission to install Python packages.
+* Enough disk space for generated outputs and optional geospatial downloads.
 
 Check Git and Python:
 
 ```bash
 git --version
-python --version
+python3 --version
 ```
 
-If `python` does not work but `python3` does, use `python3` in the commands below.
-
-## Step 1: Clone the repository
-
-Open a terminal and move to the folder where you want the lesson repository to live. Then run:
+## Step 1: Clone The Repository
 
 ```bash
-git clone https://github.com/CU-ESIIL/LLM_lesson_exemplar.git
-cd LLM_lesson_exemplar
+git clone https://github.com/CU-ESIIL/Quantum_emulator.git
+cd Quantum_emulator
 ```
-
-For a deeper explanation of why this lesson centers the repository as the unit of AI-assisted scientific work, see [Agents and Systems](agents-and-systems.md).
 
 Confirm that you are in the repository:
 
@@ -57,133 +57,13 @@ Confirm that you are in the repository:
 ls
 ```
 
-You should see files and folders such as `README.md`, `requirements.txt`, `docs/`, `examples/`, `src/`, and `workflows/`.
+You should see `README.md`, `requirements.txt`, `docs/`, `src/`, `tests/`, and
+`workflows/`.
 
-## Step 2: Create a local Python environment
-
-Create and activate a virtual environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-On Windows PowerShell, activation usually looks like:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-When the environment is active, your terminal prompt may show `(.venv)`.
-
-## Step 3: Install dependencies
-
-Install the packages used by the lesson:
+## Step 2: Create A Python Environment
 
 ```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-This installs the documentation tools, geospatial libraries, plotting libraries, STAC support, NetCDF/OPeNDAP tools, and testing utilities used by the example workflow.
-
-If dependency installation fails, read the error message carefully. Geospatial Python packages sometimes depend on local system libraries, especially on older machines or managed computers.
-
-## Step 4: Add model credentials safely
-
-Some parts of the lesson can run as ordinary Python geospatial processing. Model-assisted workflows require an API key or endpoint.
-
-For an OpenAI-compatible setup, set your API key in the same terminal session:
-
-```bash
-export OPENAI_API_KEY="your-api-key-here"
-```
-
-If your provider gives you a custom endpoint and model name, set those too:
-
-```bash
-export OPENAI_BASE_URL="https://example-endpoint.invalid/v1"
-export MODEL_NAME="example-model-name"
-```
-
-Replace the example values with the values from your model provider or instructor.
-
-Do not commit API keys, tokens, or credentials to the repository.
-
-If you want a deeper comparison of model options and tradeoffs before choosing a model, see [Available Models](available-models.md).
-
-Check whether your key is set without printing the key itself:
-
-```bash
-python -c "import os; print('OPENAI_API_KEY is set' if os.getenv('OPENAI_API_KEY') else 'OPENAI_API_KEY is missing')"
-```
-
-## Step 5: Run the reference example
-
-Run the Colorado fire risk example from the repository root:
-
-```bash
-python examples/colorado_fire_risk/colorado_harmonization.py
-```
-
-The script downloads and harmonizes:
-
-- FBFM40 fire behavior fuel models,
-- MACAv2 winter precipitation,
-- MTBS burned area boundaries,
-- and Microsoft building footprints.
-
-All layers are harmonized to a common CRS, extent, and resolution for the Colorado example.
-
-## Step 6: Inspect the outputs
-
-Outputs are written to:
-
-```text
-examples/colorado_fire_risk/output/
-```
-
-List the output files:
-
-```bash
-ls examples/colorado_fire_risk/output/
-```
-
-Expected outputs may include:
-
-- harmonized raster or vector files,
-- `harmonized_visualization.png`,
-- `harmonized_visualization.html`,
-- intermediate files or logs,
-- and a short summary if the workflow generated one.
-
-Open the PNG to check the static visualization. Open the HTML file in a browser to inspect the interactive map.
-
-## Step 7: Modify or create a workflow
-
-After the reference example works locally, use the repository structure for your own workflow. User-created analyses should go under `workflows/`, not `examples/`.
-
-If you want to use your own datasets, start with [Bring Your Own Data](provide-your-own-data-sources.md) so the workflow receives direct download URLs.
-
-If you want to adapt the lesson prompt, model, data sources, or outputs, continue to [Modify the Lesson](modify.md).
-
-## Common issues
-
-### Python is not found
-
-Try:
-
-```bash
-python3 --version
-```
-
-If `python3` works, use `python3` instead of `python` when creating the environment.
-
-### The virtual environment is not active
-
-Activate it again from the repository root:
-
-```bash
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -193,43 +73,98 @@ On Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 ```
 
-### A package is missing
-
-Confirm that you installed dependencies inside the active virtual environment:
+## Step 3: Install Dependencies
 
 ```bash
-which python
-python -m pip list
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
 ```
 
-Then reinstall:
+The demo can fall back to a local randomized search if `dwave-neal` is not
+available. The default workflow does not need a D-Wave cloud account.
+
+## Step 4: Run The Emulator Demo
+
+Run these commands from the repository root:
 
 ```bash
-python -m pip install -r requirements.txt
+python3 workflows/ecological_monitoring_demo/01_make_synthetic_site_table.py
+python3 workflows/ecological_monitoring_demo/02_build_qubo.py
+python3 workflows/ecological_monitoring_demo/03_run_quantum_emulator.py
+python3 workflows/ecological_monitoring_demo/04_compare_baselines.py
+python3 workflows/ecological_monitoring_demo/05_map_results.py
 ```
 
-### The workflow cannot download data
+## Step 5: Inspect Outputs
 
-Check your internet connection and try the command again. Some institutional networks block large downloads or streaming endpoints.
+Outputs are written to:
 
-### The model key is missing
+```text
+workflows/ecological_monitoring_demo/output/
+```
 
-Set the key in the same terminal session where you run the workflow:
+Look for:
+
+* `candidate_sites.csv`
+* `qubo_summary.json`
+* `selected_sites_quantum_emulator.csv`
+* `selected_sites_quantum_emulator.geojson`
+* `selected_sites_greedy_baseline.csv`
+* `site_selection_comparison.csv`
+* `harmonized_visualization.png`
+
+The comparison table is the main scientific checkpoint. Use it to compare the
+emulator and greedy baseline in terms of biological value, cost, environmental
+spread, and regions represented.
+
+## Optional: Run The Harmonizer
+
+If you want to see how geospatial data can be prepared before optimization, run
+the preserved Colorado harmonization example:
 
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
+python3 examples/colorado_fire_risk/colorado_harmonization.py
 ```
 
-Then check without printing the secret:
+That example is not the center of the site anymore. It is a reference for the
+upstream step: turning heterogeneous environmental layers into analysis-ready
+inputs for later data-to-decision workflows.
+
+## Common Issues
+
+### Python Is Not Found
+
+Try:
 
 ```bash
-python -c "import os; print('OPENAI_API_KEY is set' if os.getenv('OPENAI_API_KEY') else 'OPENAI_API_KEY is missing')"
+python --version
 ```
 
-## Where to go next
+If `python` works but `python3` does not, use `python` in the commands above.
 
-If you need the full cloud setup, go to [Run on CyVerse](cyverse.md).
+### A Package Is Missing
 
-If you are following the workshop sequence, keep the [Lesson Slides](slides.md) open alongside these steps.
+Confirm that your virtual environment is active:
 
-If you are maintaining the package or site, go to [Developer Documentation](developer-docs.md).
+```bash
+which python3
+python3 -m pip list
+```
+
+Then reinstall dependencies:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+### The Map Step Skips Plotting
+
+The plotting helper uses `matplotlib` when available and falls back to `Pillow`
+for a simple PNG. If neither package is installed, install the requirements
+again.
+
+## Where To Go Next
+
+Continue with [The Example Problem](example-problem.md), then read the
+[QUBO / Ising Explainer](qubo-explainer.md) before adapting the workflow to your
+own data.

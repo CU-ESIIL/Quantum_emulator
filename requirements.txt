@@ -4,6 +4,8 @@ mkdocs-material>=9.5
 # Geospatial data harmonization
 rasterio>=1.3
 numpy>=1.21
+pandas>=2.0
+scikit-learn>=1.3
 matplotlib>=3.5
 Pillow>=9.0
 pyproj>=3.4
@@ -34,3 +36,9 @@ dask[array]>=2026.3.0
 # Testing and catalog sync
 pytest>=7.0
 requests>=2.28
+
+# Optional local quantum-inspired optimization tools.
+# The ecological monitoring demo falls back to a local randomized search if
+# these are unavailable, and does not require a D-Wave cloud account.
+dimod>=0.12
+dwave-neal>=0.6
