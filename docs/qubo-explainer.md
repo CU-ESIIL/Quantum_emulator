@@ -7,6 +7,12 @@ long, but the idea is simple:
 choose 0 or 1 values that minimize an objective
 ```
 
+QUBO models are widely used because many combinatorial problems can be expressed
+as binary choices plus pairwise interactions. The tutorial by
+[Glover, Kochenberger, and Du](https://arxiv.org/abs/1811.11538) is a useful
+entry point, and [Lucas](https://arxiv.org/abs/1302.5843) shows how many
+NP-hard problems can be written in related Ising forms.
+
 For this demo, each binary variable represents a monitoring-site decision:
 
 ```text
@@ -27,11 +33,33 @@ The demo uses:
 * redundancy between similar selected sites as a pairwise penalty
 * a target-count penalty to prefer selecting exactly 12 sites
 
+In compact form, the model is trying to minimize an energy like:
+
+```text
+energy =
+  - biological reward
+  - environmental coverage reward
+  + redundancy penalty
+  + cost penalty
+  + target-count penalty
+```
+
+The signs matter. Rewards lower energy because the solver minimizes. Penalties
+raise energy when a candidate solution violates a preference.
+
 ## Why This Is Quantum-Ready
 
 Quantum and quantum-inspired optimizers often accept binary quadratic models.
 That means the same problem form can be used with a local emulator today and
 with other compatible solvers later.
+
+D-Wave's Ocean documentation describes this family as binary quadratic models
+and notes that samplers accept such models and return variable assignments that
+try to minimize the problem energy. See the
+[D-Wave sampler documentation](https://docs.dwavequantum.com/en/latest/ocean/api_ref_system/samplers.html)
+for the solver interface and the
+[D-Wave concepts documentation](https://docs.dwavequantum.com/en/latest/concepts/index.html)
+for the broader model vocabulary.
 
 This is not proof that a quantum computer would outperform a classical method.
 It is a way to practice the translation from environmental synthesis to a
@@ -52,3 +80,12 @@ network balances the rewards and penalties encoded in the model:
 Different weights change the meaning of "best." That is why the workflow is
 useful for experimentation: researchers can rerun the same candidate table under
 different ecological priorities and compare how the selected sites change.
+
+## Why Baselines Are Required
+
+A quantum-ready formulation is only useful if it is compared with something
+understandable. This repo uses a greedy baseline because it is transparent: pick
+the next site that looks best under a simple scoring rule. More serious studies
+should also compare against established classical optimization tools, such as
+mixed integer linear programming, simulated annealing, or domain tools like
+Marxan and prioritizr.

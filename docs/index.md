@@ -74,6 +74,13 @@ how the selected monitoring network changes. That makes tradeoffs visible before
 anyone commits to a sampling design, conservation priority, or working-group
 scenario.
 
+This sits in a familiar scientific tradition. Conservation planning tools such
+as [Marxan](https://marxansolutions.org/) and
+[prioritizr](https://prioritizr.net/) already use optimization to compare
+spatial decisions under cost, representation, and constraint tradeoffs. This
+repo adds a quantum-ready version of that habit: formulate a small binary model,
+run it locally, compare it with a baseline, and keep the results inspectable.
+
 ## What You Will Practice
 
 * Turning environmental layers into candidate monitoring sites.
@@ -92,3 +99,6 @@ scientists can prepare decision problems in forms that are quantum-ready.
 AI agents still matter here: they can help harmonize and prepare environmental
 data. Quantum-inspired optimization then helps explore the decision space that
 comes after harmonization.
+
+For the technical and conservation-planning references behind this framing, see
+[Scientific Grounding](scientific-grounding.md).

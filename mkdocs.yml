@@ -22,6 +22,7 @@ hooks:
 nav:
   - Home: index.md
   - Why Quantum for EDS?: why-quantum-for-eds.md
+  - Scientific Grounding: scientific-grounding.md
   - The Example Problem: example-problem.md
   - Build a Decision Table: build-decision-table.md
   - QUBO / Ising Explainer: qubo-explainer.md

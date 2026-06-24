@@ -216,6 +216,59 @@ Codex GPT-5
 ## 2026-06-23
 
 ### Prompt
+User asked for a thorough website content check, research into how to improve the content, and a more scholarly infusion of expertise.
+
+### LLM
+Codex GPT-5
+
+### Files and folders inspected
+- `mkdocs.yml`
+- `docs/index.md`
+- `docs/why-quantum-for-eds.md`
+- `docs/example-problem.md`
+- `docs/build-decision-table.md`
+- `docs/qubo-explainer.md`
+- `docs/run-the-demo.md`
+- `docs/interpret-results.md`
+- `docs/next-steps.md`
+- `docs/start-here.md`
+- `docs/provide-your-own-data-sources.md`
+- `docs/data-harmonizer.md`
+- `docs/agents-and-systems.md`
+- `docs/workflows/ecological_monitoring_demo.md`
+
+### Research consulted
+- D-Wave Ocean documentation on samplers and binary quadratic models.
+- Glover, Kochenberger, and Du's QUBO tutorial.
+- Lucas's Ising formulations survey.
+- Preskill's NISQ-era framing.
+- Margules and Pressey's systematic conservation planning review.
+- Marxan and prioritizr documentation for conservation decision-support context.
+- Open Data Cube documentation for analysis-ready geospatial data context.
+
+### Actions taken
+- Added `docs/scientific-grounding.md` and included it in MkDocs navigation.
+- Strengthened `docs/why-quantum-for-eds.md` with systematic conservation planning, NISQ caution, Marxan, and prioritizr context.
+- Expanded `docs/build-decision-table.md` to frame the table as a methods object and clarify normalization as a modeling decision.
+- Expanded `docs/qubo-explainer.md` with QUBO/Ising scholarly references, a compact energy interpretation, D-Wave model vocabulary, and the need for baselines.
+- Expanded `docs/interpret-results.md` with a clearer reading of the checked-in demo result and a stronger scenario-ensemble interpretation.
+- Expanded `docs/run-the-demo.md` with a scientist-oriented scenario comparison table.
+- Expanded `docs/next-steps.md` with sensitivity analysis, exact solver comparisons, selection frequency, representation targets, and domain-expert review.
+- Added scholarly links to the homepage and cross-linked to Scientific Grounding.
+
+### Verification
+- Searched active docs for overclaiming terms such as advantage, speedup, wins, guaranteed, and superior.
+- Confirmed the active navigation includes `Scientific Grounding`.
+- Confirmed scholarly links are present in the revised pages.
+
+### Open questions and follow-up
+- MkDocs build was not run because `mkdocs` is not installed in the available local runtimes.
+
+---
+
+## 2026-06-23
+
+### Prompt
 User asked whether the site does a good job explaining what emulation is, what the results show, and why the approach is promising for EDS scientists.
 
 ### LLM

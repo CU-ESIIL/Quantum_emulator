@@ -50,6 +50,21 @@ Useful experiments:
 * Change `target_count` to compare smaller or larger monitoring networks.
 * Change `seed`, `num_reads`, or `sweeps` to explore solver variability.
 
+## Compare Like A Scientist
+
+When you change a setting, keep a small experiment log:
+
+| Scenario | Change | Expected effect |
+|---|---|---|
+| Coverage emphasis | increase `coverage_weight` | selected sites should spread farther across environmental gradients |
+| Cost-sensitive | increase `cost_weight` | lower-cost sites should become more likely |
+| Less redundancy | increase `redundancy_weight` | similar site pairs should be discouraged |
+| Smaller network | reduce `target_count` | fewer sites, sharper tradeoffs |
+| Robustness check | change `seed` and rerun | stable sites should appear repeatedly |
+
+The goal is not to tune until the emulator "wins." The goal is to learn how the
+decision model responds when scientific priorities change.
+
 ## Outputs
 
 Look in `workflows/ecological_monitoring_demo/output/` for:

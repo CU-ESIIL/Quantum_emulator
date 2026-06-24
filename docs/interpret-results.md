@@ -13,6 +13,12 @@ That does not make either method automatically better. It shows what the
 workflow is for: comparing decision tradeoffs in a way environmental scientists
 can inspect.
 
+This is the right interpretation. The result is not "the emulator won" or "the
+baseline won." It is "these two methods expose different decision priorities."
+That is often more valuable for EDS than a single winner, because environmental
+planning is shaped by stakeholder priorities, field logistics, uncertainty, and
+ecological judgment.
+
 Useful columns include:
 
 * `n_sites`: how many sites were selected
@@ -21,6 +27,20 @@ Useful columns include:
 * `mean_environmental_distance`: how spread out the selected sites are in
   environmental feature space
 * `regions_represented`: how many named regions appear in the selection
+
+## Reading The Current Result
+
+| Question | What the checked-in demo suggests |
+|---|---|
+| Did both methods satisfy the target count? | Yes, both selected 12 sites. |
+| Which method favored biological value? | The greedy baseline had higher mean biological value. |
+| Which method favored environmental spread? | The emulator had higher mean environmental distance. |
+| Which method was cheaper in this run? | The greedy baseline had lower total cost. |
+| Did either method cover more named regions? | No, both represented 3 regions. |
+
+For a real working group, this table is the start of interpretation, not the end
+of it. The next step is to inspect which sites changed and whether those changes
+make ecological, logistical, and governance sense.
 
 ## What To Look For
 
@@ -42,3 +62,16 @@ The emulator workflow helps by making those priorities explicit. Instead of
 arguing about an opaque score, a working group can adjust weights, rerun the
 experiment, and see which sites move in or out of the solution. The result is a
 clearer data-to-decision conversation.
+
+## What Would Make The Evidence Stronger?
+
+A stronger analysis would run a scenario ensemble:
+
+* vary objective weights across plausible ranges
+* repeat stochastic solvers with multiple random seeds
+* compare against stronger classical baselines
+* summarize how often each site is selected
+* map sites that are stable across scenarios
+* document which ecological assumptions drive each solution
+
+That is the direction this training workflow points toward.

@@ -16,5 +16,16 @@ Possible next steps:
 * Build scenario notebooks for different conservation, monitoring, or
   restoration objectives.
 
+Scholarly next steps:
+
+* Treat selected sites as a portfolio, not a single answer.
+* Run sensitivity analysis over objective weights and random seeds.
+* Compare with exact solvers where feasible, such as mixed integer linear
+  programming.
+* Add representation targets for species, habitats, or climate classes.
+* Track irreplaceability or selection frequency across scenario ensembles.
+* Engage domain experts to decide whether selected sites are ecologically
+  plausible and logistically feasible.
+
 The important habit is the translation: environmental synthesis into a clear,
 inspectable decision model.
