@@ -216,6 +216,69 @@ Codex GPT-5
 ## 2026-06-23
 
 ### Prompt
+User asked whether the site does a good job explaining what emulation is, what the results show, and why the approach is promising for EDS scientists.
+
+### LLM
+Codex GPT-5
+
+### Files and folders inspected
+- `docs/index.md`
+- `docs/why-quantum-for-eds.md`
+- `docs/qubo-explainer.md`
+- `docs/interpret-results.md`
+- `docs/run-the-demo.md`
+
+### Actions taken
+- Added a plain-language "What Emulation Means Here" section to the homepage.
+- Expanded `docs/why-quantum-for-eds.md` to define emulation as local quantum-ready optimization practice on classical hardware.
+- Added a "Why The Result Is Promising" section focused on EDS decision tradeoffs and scenario experimentation.
+- Expanded the QUBO explainer to describe how the emulator searches for low-energy site-selection solutions.
+- Updated result interpretation to explain the actual checked-in demo tradeoff: the emulator selected a more environmentally spread-out network, while the greedy baseline scored higher on mean biological value and lower cost.
+- Added a "Try Different Scenarios" section to the run page with specific QUBO weights users can change.
+
+### Verification
+- Searched the edited docs for emulation, tradeoff, quantum hardware, advantage, and speedup language to confirm the framing stayed clear and appropriately cautious.
+
+### Open questions and follow-up
+- MkDocs build was not run because `mkdocs` is not installed in the available local runtimes.
+
+---
+
+## 2026-06-23
+
+### Prompt
+User noted that the homepage graph images did not look like real results and asked to populate the website with actual figures from the emulator run.
+
+### LLM
+Codex GPT-5
+
+### Files and folders inspected
+- `docs/index.md`
+- `docs/stylesheets/extra.css`
+- `workflows/ecological_monitoring_demo/output/site_selection_comparison.csv`
+- `workflows/ecological_monitoring_demo/output/harmonized_visualization.png`
+
+### Actions taken
+- Copied real demo outputs into `docs/assets/workflows/ecological_monitoring_demo/`.
+- Replaced the illustrative homepage hero graphic with `actual-demo-comparison.svg`, built from the checked-in `site_selection_comparison.csv` values.
+- Added an "Actual Demo Result" section to the homepage with the generated site-selection map, real comparison metrics, and a CSV download link.
+- Removed the earlier illustrative `quantum-emulator-hero.svg` asset to avoid confusing fake graph imagery with real output.
+- Added CSS for the actual-results grid and result panel.
+
+### Verification
+- Confirmed homepage references point to existing docs assets.
+- Confirmed the copied map is a valid 1000 x 760 PNG.
+- Confirmed the comparison table asset is CSV text.
+- Confirmed the new comparison graphic is valid SVG.
+
+### Open questions and follow-up
+- MkDocs build was not run because `mkdocs` is not installed in the available local runtimes.
+
+---
+
+## 2026-06-23
+
+### Prompt
 User provided `quantum infrastructure logo.png` as a replacement logo.
 
 ### LLM

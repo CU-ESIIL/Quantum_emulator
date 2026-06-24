@@ -36,3 +36,19 @@ with other compatible solvers later.
 This is not proof that a quantum computer would outperform a classical method.
 It is a way to practice the translation from environmental synthesis to a
 solver-ready decision model.
+
+## What The Emulator Does With The QUBO
+
+After the QUBO is built, the local emulator searches for a low-energy set of
+binary decisions. In this site-selection example, low energy means the selected
+network balances the rewards and penalties encoded in the model:
+
+* reward sites with high biological value
+* reward environmental coverage
+* penalize redundant site pairs
+* penalize high cost
+* penalize selecting too many or too few sites
+
+Different weights change the meaning of "best." That is why the workflow is
+useful for experimentation: researchers can rerun the same candidate table under
+different ecological priorities and compare how the selected sites change.

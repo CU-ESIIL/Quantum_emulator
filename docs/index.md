@@ -15,7 +15,7 @@ tradeoffs back to geography.
 </div>
 
 <figure class="qe-hero-visual">
-  <img src="assets/images/heroes/quantum-emulator-hero.svg" alt="Minimal performance-style graphs showing environmental signals becoming a binary decision model and compared emulator outcomes.">
+  <img src="assets/workflows/ecological_monitoring_demo/actual-demo-comparison.svg" alt="Actual demo comparison chart showing the emulator and greedy baseline tradeoffs.">
 </figure>
 </section>
 
@@ -26,6 +26,53 @@ tradeoffs back to geography.
 <span>Compare</span>
 <span>Map</span>
 </div>
+
+## Actual Demo Result
+
+These figures come from the checked-in ecological monitoring demo run, not a
+mockup. The emulator and greedy baseline each selected 12 sites from 100
+synthetic candidate monitoring locations.
+
+<div class="qe-results-grid" markdown>
+<figure markdown>
+![Actual map of candidate sites, emulator selections, and greedy baseline selections.](assets/workflows/ecological_monitoring_demo/harmonized_visualization.png)
+<figcaption>Selected monitoring sites mapped back to geography.</figcaption>
+</figure>
+
+<div class="qe-result-panel" markdown>
+
+### What changed between methods?
+
+| Metric | Emulator | Greedy baseline |
+|---|---:|---:|
+| Sites selected | 12 | 12 |
+| Mean biological value | 0.59 | 0.73 |
+| Total cost | 65,913 | 62,529 |
+| Environmental distance | 1.04 | 0.63 |
+| Regions represented | 3 | 3 |
+
+The emulator run selected a more environmentally spread-out network. The greedy
+baseline selected a lower-cost network with higher mean biological value. That
+tradeoff is the point of the exercise: compare candidate decisions, then decide
+which tradeoff makes scientific sense.
+
+[Download comparison CSV](assets/workflows/ecological_monitoring_demo/site_selection_comparison.csv){ .md-button }
+
+</div>
+</div>
+
+## What Emulation Means Here
+
+The emulator is a local training stand-in for quantum-ready optimization. It
+does not run on quantum hardware. It takes the same kind of binary decision
+model that quantum-inspired or hybrid solvers can use, then explores solutions
+on classical hardware so researchers can learn the workflow now.
+
+For EDS scientists, the useful part is the experiment loop: change the site
+selection objective, rerun the emulator, compare against a baseline, and inspect
+how the selected monitoring network changes. That makes tradeoffs visible before
+anyone commits to a sampling design, conservation priority, or working-group
+scenario.
 
 ## What You Will Practice
 
